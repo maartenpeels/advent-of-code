@@ -1,4 +1,7 @@
+from functools import reduce
+
 filename = "./forrest.txt"
+slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
 
 with open(filename) as f:
     forrest = [list(line.strip()) for line in f]
@@ -17,20 +20,10 @@ def count_trees(slope_x, slope_y):
     y += slope_y
   return trees
 
-print(f'Height: {len(forrest)}')
-print(f'Width: {len(forrest[0])}')
+part_1_trees = count_trees(3, 1)
+part_2_trees = 1
+for slope_x, slope_y in slopes:
+  part_2_trees *= count_trees(slope_x, slope_y)
 
-trees_1_1 = count_trees(1, 1)
-trees_3_1 = count_trees(3, 1)
-trees_5_1 = count_trees(5, 1)
-trees_7_1 = count_trees(7, 1)
-trees_1_2 = count_trees(1, 2)
-
-print(f'Right 1, Down 1: {trees_1_1}')
-print(f'Right 3, Down 1: {trees_3_1}')
-print(f'Right 5, Down 1: {trees_5_1}')
-print(f'Right 7, Down 1: {trees_7_1}')
-print(f'Right 1, Down 2: {trees_1_2}')
-
-print(f'Answer part 1: {trees_3_1}')
-print(f'Answer part 2: {trees_1_1 * trees_3_1 * trees_5_1 * trees_7_1 * trees_1_2}')
+print(f'Answer part 1: {part_1_trees}')
+print(f'Answer part 2: {part_2_trees}')
