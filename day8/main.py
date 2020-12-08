@@ -6,7 +6,6 @@ class CPU:
     self.history = []
     self.stack_trace = []
 
-    self.running = True
     self.acc = 0
     self.pc = 0
     
@@ -19,20 +18,18 @@ class CPU:
     self.program = program
   
   def start(self):
-    while self.running:
+    while self.pc < len(self.program):
+      if self.pc in self.history:
+        print(f'Infinite Loop. Current acc: {self.acc}')
+        return
+
       self.step()
 
+    print(f'Program Exited. Current acc: {self.acc}')
+
   def step(self):
-    if self.pc >= len(self.program):
-      self.running = False
-      print(f'Program Exited. Current acc: {self.acc}')
-      return
     opcode, arg = self.program[self.pc]
 
-    if self.pc in self.history:
-      self.running = False
-      print(f'Infinite Loop. Current acc: {self.acc}')
-      return
     self.history.append(self.pc)
     self.stack_trace.append(f'{opcode} {arg}')
 
@@ -51,7 +48,7 @@ class CPU:
 
 program = []
 
-for instruction in open(f"{os.getcwd()}/day8/program.txt").readlines():
+for instruction in open(f"./program.txt").readlines():
   opcode, arg = instruction.split(' ')
   program += [(opcode, int(arg))]
 
