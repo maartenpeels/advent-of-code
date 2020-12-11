@@ -7,14 +7,14 @@ differences = []
 
 last_adapter = 0
 for adapter in adapters:
-  differences.append(adapter - last_adapter)
-  last_adapter = adapter
+    differences.append(adapter - last_adapter)
+    last_adapter = adapter
 
 amount = Counter(differences)
 print(f'Answer of part 1: {amount[1] * amount[3]}')
 
-sol = {0:1}
+sol = {0: 1}
 for adapter in adapters[1:]:
-    sol[adapter] = sol.get(adapter-1, 0) + sol.get(adapter-2, 0) + sol.get(adapter-3, 0)
+    sol[adapter] = sol.get(adapter - 1, 0) + sol.get(adapter - 2, 0) + sol.get(adapter - 3, 0)
 
 print(f'Answer of part 2: {sol[max(adapters)]}')
