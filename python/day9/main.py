@@ -22,10 +22,10 @@ def valid_sum(target_val, numbers):
 
 def find_contiguous_set(target_val):
     for size in range(2, len(xmas)):
-        for pos in range(len(xmas)-size):
-            result = sum(xmas[pos:pos+size])
+        for pos in range(len(xmas) - size):
+            result = sum(xmas[pos:pos + size])
             if result == target_val:
-                return sorted(xmas[pos:pos+size])
+                return sorted(xmas[pos:pos + size])
     return []
 
 
