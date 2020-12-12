@@ -15,35 +15,74 @@ degrees_to_direction = {
     270: WEST
 }
 
+
+def move(cmd, amount):
+    global current_north, current_east, current_facing
+
+    if cmd == NORTH:
+        current_north += amount
+    if cmd == EAST:
+        current_east += amount
+    if cmd == SOUTH:
+        current_north -= amount
+    if cmd == WEST:
+        current_east -= amount
+    if cmd == LEFT:
+        current_facing = (current_facing - amount) % 360
+    if cmd == RIGHT:
+        current_facing = (current_facing + amount) % 360
+
+
+def rotate(degrees):
+    global current_north, current_east, waypoint_north, waypoint_east
+
+    if degrees == 90:
+        waypoint_east, waypoint_north = waypoint_north, -waypoint_east
+    if degrees == 180:
+        waypoint_east, waypoint_north = -waypoint_east, -waypoint_north
+    if degrees == 270:
+        waypoint_east, waypoint_north = -waypoint_north, waypoint_east
+
+
+# Part 1
 current_north = 0
 current_east = 0
 current_facing = 90
 
+for direction in directions:
+    cmd = direction[0]
+    amount = direction[1]
 
-def add(direction, amount):
-    global current_north, current_east
+    move(cmd, amount)
+    if cmd == FORWARD:
+        move(degrees_to_direction[current_facing], amount)
 
-    if direction == NORTH:
-        current_north += amount
-    if direction == EAST:
-        current_east += amount
-    if direction == SOUTH:
-        current_north -= amount
-    if direction == WEST:
-        current_east -= amount
+print(f'Answer for part 1: {abs(current_north) + abs(current_east)}')
 
+# Part 2
+current_north = 0
+current_east = 0
+waypoint_north = 1
+waypoint_east = 10
 
 for direction in directions:
-    add(direction[0], direction[1])
+    cmd = direction[0]
+    amount = direction[1]
 
-    if direction[0] == LEFT:
-        current_facing = (current_facing - direction[1]) % 360
-    if direction[0] == RIGHT:
-        current_facing = (current_facing + direction[1]) % 360
-    if direction[0] == FORWARD:
-        add(degrees_to_direction[current_facing], direction[1])
+    if cmd == NORTH:
+        waypoint_north += amount
+    if cmd == SOUTH:
+        waypoint_north -= amount
+    if cmd == EAST:
+        waypoint_east += amount
+    if cmd == WEST:
+        waypoint_east -= amount
+    if cmd == LEFT:
+        rotate(-amount + 360)
+    if cmd == RIGHT:
+        rotate(amount)
+    if cmd == FORWARD:
+        current_north += amount * waypoint_north
+        current_east += amount * waypoint_east
 
-print(f'North: {current_north}') if current_north > 0 else print(f'South: {-current_north}')
-print(f'East: {current_east}') if current_east > 0 else print(f'West: {-current_east}')
-print(f'Facing: {current_facing} ({degrees_to_direction[current_facing]})')
-print(f'Answer for part 1: {abs(current_north) + abs(current_east)}')
+print(f'Answer for part 2: {abs(current_north) + abs(current_east)}')
