@@ -1,4 +1,4 @@
-movements = [(line.split(' ')[0], int(line.split(' ')[1])) for line in open('input.txt').readlines()]
+movements = [(line.split(' ')[0], int(line.split(' ')[1])) for line in open('02/input.txt').readlines()]
 
 horizontal = 0
 depth = 0

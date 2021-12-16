@@ -1,4 +1,4 @@
-numbers = [int(line) for line in open('input.txt').readlines()]
+numbers = [int(line) for line in open('01/input.txt').readlines()]
 part1_larger_measerments = 0
 part2_larger_measerments = 0
 
