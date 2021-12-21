@@ -24,15 +24,13 @@ def get_neighbours(risk_levels, xy):
 
 def calculate_min_cost(_grid):
     unvisited = []
-    costs = defaultdict(int)
+    costs = defaultdict(lambda: 9999999)
     risk_levels = defaultdict(int)
 
     for i, row in enumerate(_grid):
         for j, val in enumerate(row):
             risk_levels[(j, i)] = int(val)
 
-    for xy in risk_levels:
-        costs[xy] = 9999999
     costs[(0, 0)] = 0
     unvisited.append((0, 0))
 
